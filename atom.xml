@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="xiaoxinglai.github.io/"/>
-  <updated>2018-04-18T10:41:30.227Z</updated>
+  <updated>2018-04-18T10:45:58.298Z</updated>
   <id>xiaoxinglai.github.io/</id>
   
   <author>
@@ -21,15 +21,16 @@
     <link href="xiaoxinglai.github.io/2018/04/18/hello-world/"/>
     <id>xiaoxinglai.github.io/2018/04/18/hello-world/</id>
     <published>2018-04-18T08:33:11.040Z</published>
-    <updated>2018-04-18T10:41:30.227Z</updated>
+    <updated>2018-04-18T10:45:58.298Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="大家好"><a href="#大家好" class="headerlink" title="大家好"></a>大家好</h2>]]></content>
+    <content type="html"><![CDATA[<p>##hello world</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h2 id=&quot;大家好&quot;&gt;&lt;a href=&quot;#大家好&quot; class=&quot;headerlink&quot; title=&quot;大家好&quot;&gt;&lt;/a&gt;大家好&lt;/h2&gt;
+        &lt;p&gt;##hello world&lt;/p&gt;
+
       
     
     </summary>
