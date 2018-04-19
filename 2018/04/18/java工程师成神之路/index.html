@@ -11,17 +11,17 @@
     
 
     
-    <meta name="description" content="java工程师成神之路JVM###JVM内存结构  堆、 栈、方法区、直接内存、堆和栈的区别  ###java内存模型  内存可见性、重排序、顺序一致性、volatile、锁、final  ###垃圾回收  内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  ###JAVA对象模型  pp[-klass、对象头 HotSpot 即时编译器、编译优化  ###类加">
+    <meta name="description" content="java工程师成神之路JVMJVM内存结构 堆、 栈、方法区、直接内存、堆和栈的区别  java内存模型 内存可见性、重排序、顺序一致性、volatile、锁、final  垃圾回收 内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  JAVA对象模型 pp[-klass、对象头 HotSpot 即时编译器、编译优化  类加载机制 classLoader、类加载">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java工程师成神之路">
 <meta property="og:url" content="xiaoxinglai.github.io/2018/04/18/java工程师成神之路/index.html">
 <meta property="og:site_name" content="laixiaoxing’s blog">
-<meta property="og:description" content="java工程师成神之路JVM###JVM内存结构  堆、 栈、方法区、直接内存、堆和栈的区别  ###java内存模型  内存可见性、重排序、顺序一致性、volatile、锁、final  ###垃圾回收  内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  ###JAVA对象模型  pp[-klass、对象头 HotSpot 即时编译器、编译优化  ###类加">
+<meta property="og:description" content="java工程师成神之路JVMJVM内存结构 堆、 栈、方法区、直接内存、堆和栈的区别  java内存模型 内存可见性、重排序、顺序一致性、volatile、锁、final  垃圾回收 内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  JAVA对象模型 pp[-klass、对象头 HotSpot 即时编译器、编译优化  类加载机制 classLoader、类加载">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T12:47:39.342Z">
+<meta property="og:updated_time" content="2018-04-19T13:01:12.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java工程师成神之路">
-<meta name="twitter:description" content="java工程师成神之路JVM###JVM内存结构  堆、 栈、方法区、直接内存、堆和栈的区别  ###java内存模型  内存可见性、重排序、顺序一致性、volatile、锁、final  ###垃圾回收  内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  ###JAVA对象模型  pp[-klass、对象头 HotSpot 即时编译器、编译优化  ###类加">
+<meta name="twitter:description" content="java工程师成神之路JVMJVM内存结构 堆、 栈、方法区、直接内存、堆和栈的区别  java内存模型 内存可见性、重排序、顺序一致性、volatile、锁、final  垃圾回收 内存分配策略、垃圾收集器（G1）、GC算法、GC参数、对象存活的判定JVM参数及调优  JAVA对象模型 pp[-klass、对象头 HotSpot 即时编译器、编译优化  类加载机制 classLoader、类加载">
 
     
     <link rel="alternative" href="/atom.xml" title="laixiaoxing’s blog" type="application/atom+xml">
@@ -97,304 +97,227 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java工程师成神之路"><span class="toc-number">1.</span> <span class="toc-text">java工程师成神之路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">1.1.</span> <span class="toc-text">JVM</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java工程师成神之路"><span class="toc-number">1.</span> <span class="toc-text">java工程师成神之路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">1.1.</span> <span class="toc-text">JVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM内存结构"><span class="toc-number">1.1.1.</span> <span class="toc-text">JVM内存结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java内存模型"><span class="toc-number">1.1.2.</span> <span class="toc-text">java内存模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.1.3.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA对象模型"><span class="toc-number">1.1.4.</span> <span class="toc-text">JAVA对象模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类加载机制"><span class="toc-number">1.1.5.</span> <span class="toc-text">类加载机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机性能监控与故障处理工具"><span class="toc-number">1.1.6.</span> <span class="toc-text">虚拟机性能监控与故障处理工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译与反编译"><span class="toc-number">1.2.</span> <span class="toc-text">编译与反编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA基础知识"><span class="toc-number">1.3.</span> <span class="toc-text">JAVA基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阅读源代码"><span class="toc-number">1.3.1.</span> <span class="toc-text">阅读源代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-中各种变量类型"><span class="toc-number">1.3.2.</span> <span class="toc-text">Java 中各种变量类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#熟悉Java中的各种关键字"><span class="toc-number">1.3.3.</span> <span class="toc-text">熟悉Java中的各种关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合类"><span class="toc-number">1.4.</span> <span class="toc-text">集合类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用集合类的使用"><span class="toc-number">1.4.1.</span> <span class="toc-text">常用集合类的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举"><span class="toc-number">1.5.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-IO-amp-Java-NIO"><span class="toc-number">1.6.</span> <span class="toc-text">Java IO &amp; Java NIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java反射与javassist"><span class="toc-number">1.7.</span> <span class="toc-text">Java反射与javassist</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化"><span class="toc-number">1.8.</span> <span class="toc-text">Java序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注解"><span class="toc-number">1.9.</span> <span class="toc-text">注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.10.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JMX"><span class="toc-number">1.11.</span> <span class="toc-text">JMX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型"><span class="toc-number">1.12.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试"><span class="toc-number">1.13.</span> <span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.14.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用的Java工具库"><span class="toc-number">1.15.</span> <span class="toc-text">常用的Java工具库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是API-amp-SPI"><span class="toc-number">1.16.</span> <span class="toc-text">什么是API &amp; SPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">1.17.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间处理"><span class="toc-number">1.18.</span> <span class="toc-text">时间处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码方式"><span class="toc-number">1.19.</span> <span class="toc-text">编码方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法糖"><span class="toc-number">1.20.</span> <span class="toc-text">语法糖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA并发编程"><span class="toc-number">1.21.</span> <span class="toc-text">JAVA并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线程，并学会使用"><span class="toc-number">1.21.1.</span> <span class="toc-text">什么是线程，并学会使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池"><span class="toc-number">1.21.2.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.21.3.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#锁"><span class="toc-number">1.21.4.</span> <span class="toc-text">锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进阶篇"><span class="toc-number">1.22.</span> <span class="toc-text">进阶篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java底层知识"><span class="toc-number">1.22.1.</span> <span class="toc-text">Java底层知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设计模式"><span class="toc-number">1.22.2.</span> <span class="toc-text">设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络编程"><span class="toc-number">1.22.3.</span> <span class="toc-text">网络编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解Nginx-和-Apache-服务器的特性并搭建一个对应的服务器"><span class="toc-number">1.22.4.</span> <span class="toc-text">了解Nginx 和 Apache 服务器的特性并搭建一个对应的服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#框架知识"><span class="toc-number">1.22.5.</span> <span class="toc-text">框架知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用服务器"><span class="toc-number">1.22.6.</span> <span class="toc-text">应用服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.22.7.</span> <span class="toc-text">工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级篇"><span class="toc-number">1.23.</span> <span class="toc-text">高级篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新技术"><span class="toc-number">1.23.1.</span> <span class="toc-text">新技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能优化知识点"><span class="toc-number">1.23.2.</span> <span class="toc-text">性能优化知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线上问题分析"><span class="toc-number">1.23.3.</span> <span class="toc-text">线上问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见问题解决思路"><span class="toc-number">1.23.4.</span> <span class="toc-text">常见问题解决思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用工具尝试解决以下问题，并写下总结"><span class="toc-number">1.23.5.</span> <span class="toc-text">使用工具尝试解决以下问题，并写下总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译原理知识"><span class="toc-number">1.23.6.</span> <span class="toc-text">编译原理知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java的反编译工具"><span class="toc-number">1.23.6.1.</span> <span class="toc-text">Java的反编译工具</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统知识"><span class="toc-number">1.23.7.</span> <span class="toc-text">操作系统知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库知识"><span class="toc-number">1.23.8.</span> <span class="toc-text">数据库知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事务"><span class="toc-number">1.23.8.1.</span> <span class="toc-text">事务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库锁"><span class="toc-number">1.23.9.</span> <span class="toc-text">数据库锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的NoSQL数据库"><span class="toc-number">1.23.10.</span> <span class="toc-text">常用的NoSQL数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构与算法知识"><span class="toc-number">1.24.</span> <span class="toc-text">数据结构与算法知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的数据结构"><span class="toc-number">1.24.1.</span> <span class="toc-text">简单的数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#树"><span class="toc-number">1.24.2.</span> <span class="toc-text">树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序算法"><span class="toc-number">1.24.3.</span> <span class="toc-text">排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#贪心算法"><span class="toc-number">1.24.3.1.</span> <span class="toc-text">贪心算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#海量数据处理"><span class="toc-number">1.25.</span> <span class="toc-text">海量数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大数据知识"><span class="toc-number">1.25.1.</span> <span class="toc-text">大数据知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式日志收集"><span class="toc-number">1.25.2.</span> <span class="toc-text">分布式日志收集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络安全知识"><span class="toc-number">1.26.</span> <span class="toc-text">网络安全知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密与解密"><span class="toc-number">1.26.1.</span> <span class="toc-text">加密与解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构篇"><span class="toc-number">1.27.</span> <span class="toc-text">架构篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式"><span class="toc-number">1.27.1.</span> <span class="toc-text">分布式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo"><span class="toc-number">1.27.2.</span> <span class="toc-text">Dubbo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式缓存"><span class="toc-number">1.27.3.</span> <span class="toc-text">分布式缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微服务"><span class="toc-number">1.27.4.</span> <span class="toc-text">微服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发"><span class="toc-number">1.27.5.</span> <span class="toc-text">高并发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#监控手段"><span class="toc-number">1.27.5.1.</span> <span class="toc-text">监控手段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负载均衡"><span class="toc-number">1.27.6.</span> <span class="toc-text">负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS"><span class="toc-number">1.27.6.1.</span> <span class="toc-text">DNS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展篇"><span class="toc-number">1.28.</span> <span class="toc-text">扩展篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#云计算"><span class="toc-number">1.28.1.</span> <span class="toc-text">云计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索引擎"><span class="toc-number">1.28.2.</span> <span class="toc-text">搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#权限管理"><span class="toc-number">1.28.3.</span> <span class="toc-text">权限管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区块链"><span class="toc-number">1.28.4.</span> <span class="toc-text">区块链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币"><span class="toc-number">1.28.5.</span> <span class="toc-text">比特币</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能"><span class="toc-number">1.28.6.</span> <span class="toc-text">人工智能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用框架"><span class="toc-number">1.28.6.1.</span> <span class="toc-text">常用框架</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它语言"><span class="toc-number">1.28.7.</span> <span class="toc-text">其它语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐书籍"><span class="toc-number">1.29.</span> <span class="toc-text">推荐书籍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#面试相关"><span class="toc-number">1.29.1.</span> <span class="toc-text">面试相关</span></a></li></ol></li></ol></li></ol>
 		
 		</div>
 		
-		<h1 id="java工程师成神之路"><a href="#java工程师成神之路" class="headerlink" title="java工程师成神之路"></a>java工程师成神之路</h1><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><p>###JVM内存结构</p>
-<blockquote>
+		<h1 id="java工程师成神之路"><a href="#java工程师成神之路" class="headerlink" title="java工程师成神之路"></a>java工程师成神之路</h1><h2 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h2><h3 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h3><blockquote>
 <p>堆、 栈、方法区、直接内存、堆和栈的区别</p>
 </blockquote>
-<p>###java内存模型</p>
-<blockquote>
+<h3 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h3><blockquote>
 <p>内存可见性、重排序、顺序一致性、volatile、锁、final</p>
 </blockquote>
-<p>###垃圾回收</p>
-<blockquote>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><blockquote>
 <p>内存分配策略、垃圾收集器（G1）、GC算法、GC参数、<br>对象存活的判定<br>JVM参数及调优</p>
 </blockquote>
-<p>###JAVA对象模型</p>
-<blockquote>
+<h3 id="JAVA对象模型"><a href="#JAVA对象模型" class="headerlink" title="JAVA对象模型"></a>JAVA对象模型</h3><blockquote>
 <p>pp[-klass、对象头 HotSpot 即时编译器、编译优化</p>
 </blockquote>
-<p>###类加载机制</p>
-<blockquote>
+<h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><blockquote>
 <p>classLoader、类加载过程、双亲委派（破坏双亲委派）、模块化（jboss modules、osgi、jigsaw）</p>
 </blockquote>
-<p>###虚拟机性能监控与故障处理工具</p>
-<blockquote>
+<h3 id="虚拟机性能监控与故障处理工具"><a href="#虚拟机性能监控与故障处理工具" class="headerlink" title="虚拟机性能监控与故障处理工具"></a>虚拟机性能监控与故障处理工具</h3><blockquote>
 <p>jps、jstack、jmap、jstat、jconsole、jinfo、jhat、javap、<br>btrace、TProfiler</p>
 </blockquote>
-<p>##编译与反编译</p>
-<blockquote>
+<h2 id="编译与反编译"><a href="#编译与反编译" class="headerlink" title="编译与反编译"></a>编译与反编译</h2><blockquote>
 <p>javac、javap、jad、CRF</p>
 </blockquote>
-<p>##JAVA基础知识</p>
-<p>###阅读源代码</p>
-<blockquote>
+<h2 id="JAVA基础知识"><a href="#JAVA基础知识" class="headerlink" title="JAVA基础知识"></a>JAVA基础知识</h2><h3 id="阅读源代码"><a href="#阅读源代码" class="headerlink" title="阅读源代码"></a>阅读源代码</h3><blockquote>
 <p>String、Integer、Long、Enum、BigDecimal、ThreadLoocal、ClassLoader &amp; URLClassLoader、<br>ArrayList &amp; LinkedList 、HashMap &amp; LinkedHashMap &amp; TreeMap &amp; ConcurrentHashMap、<br>HashSet &amp; LinkedHashSet &amp; TreeSet</p>
 </blockquote>
-<p>###Java 中各种变量类型</p>
-<blockquote>
+<h3 id="Java-中各种变量类型"><a href="#Java-中各种变量类型" class="headerlink" title="Java 中各种变量类型"></a>Java 中各种变量类型</h3><blockquote>
 <p>熟悉Java<br>String的使用<br>熟悉String的各种函数JDK6和JDK7中subString的原理及区别<br>replaceFirst、replaceAll、replace区别、<br>String 对”+”的重载、String.valueOf和Integer.toString的区别<br>字符串的不可变性<br>自动拆装箱<br>Integer的缓存机制</p>
 </blockquote>
-<p>###熟悉Java中的各种关键字</p>
-<blockquote>
+<h3 id="熟悉Java中的各种关键字"><a href="#熟悉Java中的各种关键字" class="headerlink" title="熟悉Java中的各种关键字"></a>熟悉Java中的各种关键字</h3><blockquote>
 <p>transient、instanceof、volatile、synchronized、final、static、const 原理及用法</p>
 </blockquote>
-<p>##集合类</p>
-<p>###常用集合类的使用</p>
-<blockquote>
+<h2 id="集合类"><a href="#集合类" class="headerlink" title="集合类"></a>集合类</h2><h3 id="常用集合类的使用"><a href="#常用集合类的使用" class="headerlink" title="常用集合类的使用"></a>常用集合类的使用</h3><blockquote>
 <p>ArrayList<br>LinkedList 和 Vector 的区别<br>synchronized、Vector的区别<br>HashMap、HashTable 、ConcurrentHashMap的区别<br>Java8 中的Stream相关用法<br>Apache集合处理工具类的使用<br>不同版本的JDK中HashMap的实现区别以及原因</p>
 </blockquote>
-<p>##枚举</p>
-<blockquote>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><blockquote>
 <p>枚举的用法、枚举与单例、Enum类</p>
 </blockquote>
-<p>##Java IO &amp; Java NIO</p>
-<blockquote>
+<h2 id="Java-IO-amp-Java-NIO"><a href="#Java-IO-amp-Java-NIO" class="headerlink" title="Java IO &amp; Java NIO"></a>Java IO &amp; Java NIO</h2><blockquote>
 <p>bio、nio、aio的区别<br>三种IO的用法与原理<br>Netty &amp; Mina</p>
 </blockquote>
-<p>##Java反射与javassist</p>
-<blockquote>
+<h2 id="Java反射与javassist"><a href="#Java反射与javassist" class="headerlink" title="Java反射与javassist"></a>Java反射与javassist</h2><blockquote>
 <p>反射与工厂模式、java.lang.reflect.*</p>
 </blockquote>
-<p>##Java序列化</p>
-<blockquote>
+<h2 id="Java序列化"><a href="#Java序列化" class="headerlink" title="Java序列化"></a>Java序列化</h2><blockquote>
 <p>什么是序列化与反序列化<br>为什么要序列化<br>序列化底层原理<br>序列化与单例模式<br>protobuf<br>为什么说序列化并不安全</p>
 </blockquote>
-<p>##注解</p>
-<blockquote>
+<h2 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h2><blockquote>
 <p>元注解、自定义注解、Java中常用注解使用、注解与反射的结合</p>
 </blockquote>
-<p>##JMS</p>
-<blockquote>
+<h2 id="JMS"><a href="#JMS" class="headerlink" title="JMS"></a>JMS</h2><blockquote>
 <p>什么是Java消息服务、JMS消息传送模型</p>
 </blockquote>
-<p>##JMX</p>
-<blockquote>
+<h2 id="JMX"><a href="#JMX" class="headerlink" title="JMX"></a>JMX</h2><blockquote>
 <p>java.lang.management.<em> 、 javax.management.</em></p>
 </blockquote>
-<p>##泛型</p>
-<blockquote>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><blockquote>
 <p>泛型与继承、泛型擦除、泛型中K T V E、Object等的含义、泛型各种用法</p>
 </blockquote>
-<p>##单元测试</p>
-<blockquote>
+<h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><blockquote>
 <p>junit、mock、Mockito、内存数据库（H2）</p>
 </blockquote>
-<p>##正则表达式</p>
-<blockquote>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><blockquote>
 <p>java.lang.util.regex.*</p>
 </blockquote>
-<p>##常用的Java工具库</p>
-<blockquote>
+<h2 id="常用的Java工具库"><a href="#常用的Java工具库" class="headerlink" title="常用的Java工具库"></a>常用的Java工具库</h2><blockquote>
 <p>commons.lang、commons.*……、guava-libraries、netty</p>
 </blockquote>
-<p>##什么是API &amp; SPI</p>
-<blockquote>
+<h2 id="什么是API-amp-SPI"><a href="#什么是API-amp-SPI" class="headerlink" title="什么是API &amp; SPI"></a>什么是API &amp; SPI</h2><blockquote>
 <p>API SPI</p>
 </blockquote>
-<p>##异常</p>
-<blockquote>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><blockquote>
 <p>异常类型、正确处理异常、自定义异常</p>
 </blockquote>
-<p>##时间处理</p>
-<blockquote>
+<h2 id="时间处理"><a href="#时间处理" class="headerlink" title="时间处理"></a>时间处理</h2><blockquote>
 <p>时区、时令、Java中时间API</p>
 </blockquote>
-<p>##编码方式</p>
-<blockquote>
+<h2 id="编码方式"><a href="#编码方式" class="headerlink" title="编码方式"></a>编码方式</h2><blockquote>
 <p>解决乱码问题、常用编码方式</p>
 </blockquote>
-<p>##语法糖</p>
-<blockquote>
+<h2 id="语法糖"><a href="#语法糖" class="headerlink" title="语法糖"></a>语法糖</h2><blockquote>
 <p>Java中语法糖原理、解语法糖</p>
 </blockquote>
-<p>##JAVA并发编程</p>
-<blockquote>
-<p>###什么是线程，并学会使用<br>Thread、Runnable、Callable、ReentrantLock、ReentrantReadWriteLock、Atomic*、<br>Semaphore、CountDownLatch、ConcurrentHashMap、Executors</p>
+<h2 id="JAVA并发编程"><a href="#JAVA并发编程" class="headerlink" title="JAVA并发编程"></a>JAVA并发编程</h2><blockquote>
+<h3 id="什么是线程，并学会使用"><a href="#什么是线程，并学会使用" class="headerlink" title="什么是线程，并学会使用"></a>什么是线程，并学会使用</h3><p>Thread、Runnable、Callable、ReentrantLock、ReentrantReadWriteLock、Atomic*、<br>Semaphore、CountDownLatch、ConcurrentHashMap、Executors</p>
 </blockquote>
-<p>###线程池</p>
-<blockquote>
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><blockquote>
 <p>自己设计线程池、submit() 和 execute()</p>
 </blockquote>
-<p>###线程安全</p>
-<blockquote>
+<h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><blockquote>
 <p>死锁、死锁如何排查、<br>Java线程调度、线程安全和内存模型的关系  </p>
 </blockquote>
-<p>###锁  </p>
-<blockquote>
+<h3 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h3><blockquote>
 <p>CAS、乐观锁与悲观锁、<br>数据库相关锁机制、分布式锁、偏向锁、轻量级锁、重量级锁、<br>monitor、锁优化、锁消除、锁粗化、自旋锁、可重入锁、阻塞锁、死锁<br>volatile<br>happens-before、编译器指令重排和CPU指令重排<br>synchronized如何实现的？<br>synchronized 和 lock之间的关系<br>不使用synchronized 如何实现一个线程案例的单例<br>sleep 和 wait<br>wait 和 notify<br>notify 和 notifyAll<br>ThreadLocal<br>写一个死锁的程序<br>写代码来解决生产者消费者问题<br>守护线程 守护线程和非守护线程的区别以及用法</p>
 </blockquote>
-<p>##二、进阶篇</p>
-<p>###Java底层知识</p>
-<blockquote>
+<h2 id="进阶篇"><a href="#进阶篇" class="headerlink" title="进阶篇"></a>进阶篇</h2><h3 id="Java底层知识"><a href="#Java底层知识" class="headerlink" title="Java底层知识"></a>Java底层知识</h3><blockquote>
 <p>字节码、class文件格式<br>CPU缓存,L1,L2,L3和伪共享<br>尾递归<br>位运算<br>用位运算实现加、减、乘、除、取余</p>
 </blockquote>
-<p>###设计模式</p>
-<blockquote>
+<h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><blockquote>
 <p>了解23种设计模式<br>会使用常用设计模式<br>单例、策略、工厂、适配器、责任链<br>实现AOP<br>实现IOC<br>不用synchronized 和 lock，实现线程案例的单例模式<br>NIO 和 Reactor设计模式</p>
 </blockquote>
-<p>###网络编程</p>
-<blockquote>
+<h3 id="网络编程"><a href="#网络编程" class="headerlink" title="网络编程"></a>网络编程</h3><blockquote>
 <p>TCP、UDP、HTTP、HTTPS等常用协议<br>三次握手与四次关闭、流量控制和拥塞控制、OSI七层模型、TCP粘包与拆包<br>HTTP/1.0 HTTP/1.1 HTTP/2之间的区别<br>Java RMI，Socket，HttpClient<br>Cookie 与 Session<br>cookie 被禁用，如何实现session<br>用Java写一个简单的静态文件的HTTP服务器<br>实现客户端缓存功能，支持返回304实现可并发下载一个文件，使用线程池处理客户端请求，使用NIO处理客户端请求，支持简单的rewrite规则,上述功能在实现的时候需要满足”开闭原则”  </p>
 </blockquote>
-<p>###了解Nginx 和 Apache 服务器的特性并搭建一个对应的服务器  </p>
-<blockquote>
+<h3 id="了解Nginx-和-Apache-服务器的特性并搭建一个对应的服务器"><a href="#了解Nginx-和-Apache-服务器的特性并搭建一个对应的服务器" class="headerlink" title="了解Nginx 和 Apache 服务器的特性并搭建一个对应的服务器"></a>了解Nginx 和 Apache 服务器的特性并搭建一个对应的服务器</h3><blockquote>
 <p>用Java实现FTP、SMTP协议<br>进程间通讯的方式<br>什么是CDN？如果实现？<br>什么是DNS？<br>反向代理</p>
 </blockquote>
-<p>###框架知识</p>
-<blockquote>
+<h3 id="框架知识"><a href="#框架知识" class="headerlink" title="框架知识"></a>框架知识</h3><blockquote>
 <p>Servlet线程安全问题<br>Servlet中的filter 和 listener<br>Hibernate 的缓存机制<br>Hibernate 的懒加载<br>Spring Bean 的初始化<br>Spring 的AOP原理<br>自己实现Spring的IOC<br>Spring MVC<br>Spring Boot 2.0<br>Spring Boot 的starter原理，自己实现一个starter<br>Spring Could<br>Spring Security</p>
 </blockquote>
-<p>###应用服务器</p>
-<blockquote>
+<h3 id="应用服务器"><a href="#应用服务器" class="headerlink" title="应用服务器"></a>应用服务器</h3><blockquote>
 <p>JBoss Tomcat Jetty Weblogic</p>
 </blockquote>
-<p>###工具</p>
-<blockquote>
+<h3 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h3><blockquote>
 <p>Git &amp; SVN<br>Maven &amp; Gradle</p>
 </blockquote>
-<p>##三、高级篇</p>
-<p>###新技术</p>
-<blockquote>
+<h2 id="高级篇"><a href="#高级篇" class="headerlink" title="高级篇"></a>高级篇</h2><h3 id="新技术"><a href="#新技术" class="headerlink" title="新技术"></a>新技术</h3><blockquote>
 <p>Java 8<br>Lambda表达式<br>Stream API<br>Java 9<br>Jigsaw、Jshell、Reactive Streams<br>Java 10 局部变量类型推断、G1的并行Full GC、 ThreadLocal 握手机制<br>Spring 5<br>响应式编程<br>Spring Boot 2.0  </p>
 </blockquote>
-<p>###性能优化知识点  </p>
-<blockquote>
+<h3 id="性能优化知识点"><a href="#性能优化知识点" class="headerlink" title="性能优化知识点"></a>性能优化知识点</h3><blockquote>
 <p>使用单例<br>使用Future模式<br>使用线程池<br>选择就绪<br>减少上下文切换<br>减少锁粒度<br>数据压缩<br>结果缓存  </p>
 </blockquote>
-<p>###线上问题分析</p>
-<blockquote>
+<h3 id="线上问题分析"><a href="#线上问题分析" class="headerlink" title="线上问题分析"></a>线上问题分析</h3><blockquote>
 <p>Dump获取<br>线程Dump、内存Dump、GC情况<br>Dump 分析 分析死锁、分析内存泄漏<br>自己编写各种OutOfMemory，StackOverFlow程序<br>HeapOutOfMemory  Young OutOfMemory<br>MethodArea OutOfMemory<br>ConstantPool OutOfMemory<br>DirectMemory OutOfMemory<br>Stack OutOfMemory<br>Stack OverFlow</p>
 </blockquote>
-<p>###常见问题解决思路</p>
-<blockquote>
+<h3 id="常见问题解决思路"><a href="#常见问题解决思路" class="headerlink" title="常见问题解决思路"></a>常见问题解决思路</h3><blockquote>
 <p>内存溢出<br>线程死锁<br>类加载冲突</p>
 </blockquote>
-<p>###使用工具尝试解决以下问题，并写下总结</p>
-<blockquote>
+<h3 id="使用工具尝试解决以下问题，并写下总结"><a href="#使用工具尝试解决以下问题，并写下总结" class="headerlink" title="使用工具尝试解决以下问题，并写下总结"></a>使用工具尝试解决以下问题，并写下总结</h3><blockquote>
 <p>当一个Java程序响应很慢时如何查找问题<br>当一个Java程序频繁FullGC时如何解决问题<br>如何查看垃圾回收日志<br>当一个Java应用发生OutOfMemory时该如何解决<br>如何判断是否出现死锁<br>如何判断是否存在内存泄露</p>
 </blockquote>
-<p>###编译原理知识</p>
-<blockquote>
+<h3 id="编译原理知识"><a href="#编译原理知识" class="headerlink" title="编译原理知识"></a>编译原理知识</h3><blockquote>
 <p>编译与反编译<br>Java代码的编译与反编译</p>
 </blockquote>
-<p>####Java的反编译工具</p>
-<blockquote>
+<h4 id="Java的反编译工具"><a href="#Java的反编译工具" class="headerlink" title="Java的反编译工具"></a>Java的反编译工具</h4><blockquote>
 <p>词法分析、语法分析（LL算法，递归下降算法、LR算法）<br>语义分析<br>运行时环境，中间代码，代码生成，代码优化</p>
 </blockquote>
-<p>###操作系统知识</p>
-<blockquote>
+<h3 id="操作系统知识"><a href="#操作系统知识" class="headerlink" title="操作系统知识"></a>操作系统知识</h3><blockquote>
 <p>Linux常用命令<br>进程同步<br>缓冲区溢出<br>分段和分页<br>虚拟内存与主存</p>
 </blockquote>
-<p>###数据库知识</p>
-<blockquote>
+<h3 id="数据库知识"><a href="#数据库知识" class="headerlink" title="数据库知识"></a>数据库知识</h3><blockquote>
 <p>MySQL执行引擎<br>MySQL执行计划<br>如何查看执行计划<br>如何根据执行计划进行SQL优化<br>SQL优化  </p>
 </blockquote>
-<p>####事务</p>
-<blockquote>
+<h4 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h4><blockquote>
 <p>事务的隔离级别<br>事务能不能实现锁的功能</p>
 </blockquote>
-<p>###数据库锁  </p>
-<blockquote>
+<h3 id="数据库锁"><a href="#数据库锁" class="headerlink" title="数据库锁"></a>数据库锁</h3><blockquote>
 <p>行锁、表锁、使用数据库锁实现乐观锁<br>数据库主备搭建<br>binlog<br>内存数据库（H2）  </p>
 </blockquote>
-<p>###常用的NoSQL数据库<br>Redis、Memcached<br>分别使用数据库锁、NoSQL实现分布式锁<br>性能调优  </p>
-<p>##数据结构与算法知识</p>
-<p>###简单的数据结构  </p>
-<blockquote>
+<h3 id="常用的NoSQL数据库"><a href="#常用的NoSQL数据库" class="headerlink" title="常用的NoSQL数据库"></a>常用的NoSQL数据库</h3><p>Redis、Memcached<br>分别使用数据库锁、NoSQL实现分布式锁<br>性能调优  </p>
+<h2 id="数据结构与算法知识"><a href="#数据结构与算法知识" class="headerlink" title="数据结构与算法知识"></a>数据结构与算法知识</h2><h3 id="简单的数据结构"><a href="#简单的数据结构" class="headerlink" title="简单的数据结构"></a>简单的数据结构</h3><blockquote>
 <p>栈、队列、链表、数组、哈希表</p>
 </blockquote>
-<p>###树</p>
-<blockquote>
+<h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><blockquote>
 <p>二叉树、字典树、平衡树、排序树、B树、B+树、R树、多路树、红黑树</p>
 </blockquote>
-<p>###排序算法</p>
-<blockquote>
+<h3 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h3><blockquote>
 <p>各种排序算法<br>时间复杂度 &amp; 空间复杂度<br>尝试优先 &amp; 广度优先搜索<br>全排列  </p>
-<p>####贪心算法<br>KMP算法<br>Hash算法</p>
+<h4 id="贪心算法"><a href="#贪心算法" class="headerlink" title="贪心算法"></a>贪心算法</h4><p>KMP算法<br>Hash算法</p>
 </blockquote>
-<p>##海量数据处理</p>
-<blockquote>
-<p>###大数据知识<br>Zookeeper 基本概念、常见用法<br>Solr、Lucene、ElasticSearch<br>在Linux上部署Solr、SolrCloud<br>新增、删除、查询索引<br>Storm、流式计算、Spark、S4<br>在Linux上部署Strom<br>用Zookeeper做协调<br>运行Storm Hello World<br>Local 和 Remote模式运行调度Storm Toplogy<br>Hadoop、离线计算<br>HDFS、MapReduce  </p>
+<h2 id="海量数据处理"><a href="#海量数据处理" class="headerlink" title="海量数据处理"></a>海量数据处理</h2><blockquote>
+<h3 id="大数据知识"><a href="#大数据知识" class="headerlink" title="大数据知识"></a>大数据知识</h3><p>Zookeeper 基本概念、常见用法<br>Solr、Lucene、ElasticSearch<br>在Linux上部署Solr、SolrCloud<br>新增、删除、查询索引<br>Storm、流式计算、Spark、S4<br>在Linux上部署Strom<br>用Zookeeper做协调<br>运行Storm Hello World<br>Local 和 Remote模式运行调度Storm Toplogy<br>Hadoop、离线计算<br>HDFS、MapReduce  </p>
 </blockquote>
-<p>###分布式日志收集</p>
-<blockquote>
+<h3 id="分布式日志收集"><a href="#分布式日志收集" class="headerlink" title="分布式日志收集"></a>分布式日志收集</h3><blockquote>
 <p>Flume、Kafka、Logstash  </p>
 <p>####数据挖掘<br>Mahout</p>
 </blockquote>
-<p>##网络安全知识</p>
-<blockquote>
+<h2 id="网络安全知识"><a href="#网络安全知识" class="headerlink" title="网络安全知识"></a>网络安全知识</h2><blockquote>
 <p>什么是XSS<br>XSS防御<br>什么是CSRF<br>什么是注入攻击<br>SQL注入、XML注入、CRLF注入<br>什么是文件上传漏洞  </p>
 </blockquote>
 <blockquote>
-<p>###加密与解密<br>MD5、SHA1、DES、AES、RSA、DSA<br>什么是DOS攻击和DDOS攻击<br>Memcached为什么可以导致DDos攻击<br>什么是反射型DDos<br>SSL、TLS、HTTPS<br>如何通过Hash碰撞进行DOS攻击<br>用OpenSSL签一个证书部署到Apache或Nginx</p>
+<h3 id="加密与解密"><a href="#加密与解密" class="headerlink" title="加密与解密"></a>加密与解密</h3><p>MD5、SHA1、DES、AES、RSA、DSA<br>什么是DOS攻击和DDOS攻击<br>Memcached为什么可以导致DDos攻击<br>什么是反射型DDos<br>SSL、TLS、HTTPS<br>如何通过Hash碰撞进行DOS攻击<br>用OpenSSL签一个证书部署到Apache或Nginx</p>
 </blockquote>
-<p>##四、架构篇</p>
-<p>###分布式</p>
-<blockquote>
+<h2 id="架构篇"><a href="#架构篇" class="headerlink" title="架构篇"></a>架构篇</h2><h3 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h3><blockquote>
 <p>数据一致性、服务治理、服务降级<br>分布式事务<br>2PC、3PC、CAP、BASE、可靠消息最终一致性、最大努力通知、TCC</p>
 </blockquote>
-<p>###Dubbo   </p>
-<blockquote>
+<h3 id="Dubbo"><a href="#Dubbo" class="headerlink" title="Dubbo"></a>Dubbo</h3><blockquote>
 <p>服务注册、服务发现、服务治理<br>分布式数据库<br>怎样打造一个分布式数据库<br>什么时候需要分布式数据库<br>Mycat<br>Otter<br>HBase<br>分布式文件系统<br>mfs<br>fastdfs </p>
 </blockquote>
-<p>###分布式缓存  </p>
-<blockquote>
+<h3 id="分布式缓存"><a href="#分布式缓存" class="headerlink" title="分布式缓存"></a>分布式缓存</h3><blockquote>
 <p>缓存一致性<br>缓存命中率<br>缓存冗余</p>
 </blockquote>
-<p>###微服务  </p>
-<blockquote>
+<h3 id="微服务"><a href="#微服务" class="headerlink" title="微服务"></a>微服务</h3><blockquote>
 <p>SOA、康威定律<br>ServiceMesh<br>Docker &amp; Kubernets<br>Spring Boot<br>Spring Cloud</p>
 </blockquote>
-<p>###高并发 </p>
-<blockquote>
+<h3 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h3><blockquote>
 <p>分表分库<br>CDN技术<br>消息队列<br>ActiveMQ<br>监控 监控什么<br>CPU、内存、磁盘I/O、网络I/O……  </p>
-<p>####监控手段<br>进程监控、语义监控、机器资源监控、数据波动<br>监控数据采集<br>日志、埋点<br>Dapper</p>
+<h4 id="监控手段"><a href="#监控手段" class="headerlink" title="监控手段"></a>监控手段</h4><p>进程监控、语义监控、机器资源监控、数据波动<br>监控数据采集<br>日志、埋点<br>Dapper</p>
 </blockquote>
-<p>###负载均衡  </p>
-<blockquote>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><blockquote>
 <p>Tomcat负载均衡、Nginx负载均衡   </p>
-<p>####DNS<br>DNS原理、DNS的设计<br>CDN<br>数据一致性</p>
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>DNS原理、DNS的设计<br>CDN<br>数据一致性</p>
 </blockquote>
-<p>##、扩展篇</p>
-<p>###云计算  </p>
-<blockquote>
+<h2 id="扩展篇"><a href="#扩展篇" class="headerlink" title="扩展篇"></a>扩展篇</h2><h3 id="云计算"><a href="#云计算" class="headerlink" title="云计算"></a>云计算</h3><blockquote>
 <p>IaaS、SaaS、PaaS、虚拟化技术、OpenStack、Serverlsess</p>
 </blockquote>
-<p>###搜索引擎</p>
-<blockquote>
+<h3 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h3><blockquote>
 <p>Solr、Lucene、Nutch、ElasticSearch  </p>
 </blockquote>
-<p>###权限管理</p>
-<blockquote>
+<h3 id="权限管理"><a href="#权限管理" class="headerlink" title="权限管理"></a>权限管理</h3><blockquote>
 <p>Shiro</p>
 </blockquote>
-<p>###区块链</p>
-<blockquote>
+<h3 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h3><blockquote>
 <p>哈希算法、Merkle树、公钥密码算法、共识算法、Raft协议、Paxos算法与Raft算法 拜占庭问题与算法、消息认证码与数字签名  </p>
 </blockquote>
-<p>###比特币</p>
-<blockquote>
+<h3 id="比特币"><a href="#比特币" class="headerlink" title="比特币"></a>比特币</h3><blockquote>
 <p>挖矿、共识机制、闪电网络、侧链、热点问题、分叉 以太坊<br>超级账本</p>
 </blockquote>
-<p>###人工智能 </p>
-<blockquote>
+<h3 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h3><blockquote>
 <p>数学基础、机器学习、人工神经网络、深度学习、应用场景 </p>
-<p>####常用框架<br>TensorFlow、DeepLearning4J</p>
+<h4 id="常用框架"><a href="#常用框架" class="headerlink" title="常用框架"></a>常用框架</h4><p>TensorFlow、DeepLearning4J</p>
 </blockquote>
-<p>###其它语言</p>
-<blockquote>
+<h3 id="其它语言"><a href="#其它语言" class="headerlink" title="其它语言"></a>其它语言</h3><blockquote>
 <p>Groovy、Python、Go、NodeJs、Swift、Rust</p>
 </blockquote>
-<p>##、推荐书籍</p>
-<blockquote>
+<h2 id="推荐书籍"><a href="#推荐书籍" class="headerlink" title="推荐书籍"></a>推荐书籍</h2><blockquote>
 <p>《深入理解Java虚拟机》<br>《Effective Java》<br>《深入分析Java Web技术内幕》<br>《大型网站技术架构》<br>《代码整洁之道》<br>《Head First 设计模式》<br>《Maven实战》<br>《区块链原理、设计与应用》<br>《Java并发编程实战》<br>《鸟哥的Linux私房菜》<br>《从Paxos到Zookeeper》<br>《架构即未来》<br>《spring实战》<br>《spring4.x企业开发实战》<br>《java8实战》<br>《java8编程参考官方教程》<br>《Spring技术内幕》<br>《springboot实战》<br>《浪潮之巅》<br>《图解http》<br>《http权威指南》<br>《unix网络编程》<br>《Tomcat架构解析》<br>《Thinking In Java》<br>《尽在双十一》阿里双11技术架构演进<br>《逆流而上》阿里技术成长之路<br>《深入理解计算机系统》<br>《HotSpot实战》<br>《java核心技术 卷2 高级特性》<br>《企业IT架构转型之道 阿里巴巴中台战略思想与架构实战》<br>《架构真经 互联网技术架构的设计原则》<br>《Docker技术入门与实战》<br>《白帽子讲web安全》<br>《java多线程编程核心技术》<br>《大型网站系统与Java中间件实践》<br>《大规模分布式存储系统：原理解析与架构实战》<br>《Spring源码深度解析》<br>《从0开始学mysql》<br>《人月神话》<br>《算法导论》搭配网易公开课<br>《java编程思想》<br>《MySQL高性能优化》<br>《高性能网站构建实战》<br>《黑客与画家》<br>《重构》<br>《正则表达式》</p>
 </blockquote>
-<p>###面试相关</p>
-<blockquote>
+<h3 id="面试相关"><a href="#面试相关" class="headerlink" title="面试相关"></a>面试相关</h3><blockquote>
 <p>《剑指offer》<br>《技术之瞳》<br>《java面试宝典》<br>《程序员面试宝典》  </p>
 </blockquote>
   
@@ -430,7 +353,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java工程师成神之路"><span class="toc-number">1.</span> <span class="toc-text">java工程师成神之路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">1.1.</span> <span class="toc-text">JVM</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#java工程师成神之路"><span class="toc-number">1.</span> <span class="toc-text">java工程师成神之路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JVM"><span class="toc-number">1.1.</span> <span class="toc-text">JVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JVM内存结构"><span class="toc-number">1.1.1.</span> <span class="toc-text">JVM内存结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java内存模型"><span class="toc-number">1.1.2.</span> <span class="toc-text">java内存模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾回收"><span class="toc-number">1.1.3.</span> <span class="toc-text">垃圾回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JAVA对象模型"><span class="toc-number">1.1.4.</span> <span class="toc-text">JAVA对象模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#类加载机制"><span class="toc-number">1.1.5.</span> <span class="toc-text">类加载机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#虚拟机性能监控与故障处理工具"><span class="toc-number">1.1.6.</span> <span class="toc-text">虚拟机性能监控与故障处理工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译与反编译"><span class="toc-number">1.2.</span> <span class="toc-text">编译与反编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA基础知识"><span class="toc-number">1.3.</span> <span class="toc-text">JAVA基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#阅读源代码"><span class="toc-number">1.3.1.</span> <span class="toc-text">阅读源代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-中各种变量类型"><span class="toc-number">1.3.2.</span> <span class="toc-text">Java 中各种变量类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#熟悉Java中的各种关键字"><span class="toc-number">1.3.3.</span> <span class="toc-text">熟悉Java中的各种关键字</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#集合类"><span class="toc-number">1.4.</span> <span class="toc-text">集合类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用集合类的使用"><span class="toc-number">1.4.1.</span> <span class="toc-text">常用集合类的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举"><span class="toc-number">1.5.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-IO-amp-Java-NIO"><span class="toc-number">1.6.</span> <span class="toc-text">Java IO &amp; Java NIO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java反射与javassist"><span class="toc-number">1.7.</span> <span class="toc-text">Java反射与javassist</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java序列化"><span class="toc-number">1.8.</span> <span class="toc-text">Java序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注解"><span class="toc-number">1.9.</span> <span class="toc-text">注解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JMS"><span class="toc-number">1.10.</span> <span class="toc-text">JMS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JMX"><span class="toc-number">1.11.</span> <span class="toc-text">JMX</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泛型"><span class="toc-number">1.12.</span> <span class="toc-text">泛型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单元测试"><span class="toc-number">1.13.</span> <span class="toc-text">单元测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式"><span class="toc-number">1.14.</span> <span class="toc-text">正则表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用的Java工具库"><span class="toc-number">1.15.</span> <span class="toc-text">常用的Java工具库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是API-amp-SPI"><span class="toc-number">1.16.</span> <span class="toc-text">什么是API &amp; SPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常"><span class="toc-number">1.17.</span> <span class="toc-text">异常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#时间处理"><span class="toc-number">1.18.</span> <span class="toc-text">时间处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编码方式"><span class="toc-number">1.19.</span> <span class="toc-text">编码方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#语法糖"><span class="toc-number">1.20.</span> <span class="toc-text">语法糖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA并发编程"><span class="toc-number">1.21.</span> <span class="toc-text">JAVA并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线程，并学会使用"><span class="toc-number">1.21.1.</span> <span class="toc-text">什么是线程，并学会使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池"><span class="toc-number">1.21.2.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程安全"><span class="toc-number">1.21.3.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#锁"><span class="toc-number">1.21.4.</span> <span class="toc-text">锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进阶篇"><span class="toc-number">1.22.</span> <span class="toc-text">进阶篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java底层知识"><span class="toc-number">1.22.1.</span> <span class="toc-text">Java底层知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设计模式"><span class="toc-number">1.22.2.</span> <span class="toc-text">设计模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络编程"><span class="toc-number">1.22.3.</span> <span class="toc-text">网络编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#了解Nginx-和-Apache-服务器的特性并搭建一个对应的服务器"><span class="toc-number">1.22.4.</span> <span class="toc-text">了解Nginx 和 Apache 服务器的特性并搭建一个对应的服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#框架知识"><span class="toc-number">1.22.5.</span> <span class="toc-text">框架知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用服务器"><span class="toc-number">1.22.6.</span> <span class="toc-text">应用服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#工具"><span class="toc-number">1.22.7.</span> <span class="toc-text">工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高级篇"><span class="toc-number">1.23.</span> <span class="toc-text">高级篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#新技术"><span class="toc-number">1.23.1.</span> <span class="toc-text">新技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#性能优化知识点"><span class="toc-number">1.23.2.</span> <span class="toc-text">性能优化知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线上问题分析"><span class="toc-number">1.23.3.</span> <span class="toc-text">线上问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见问题解决思路"><span class="toc-number">1.23.4.</span> <span class="toc-text">常见问题解决思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用工具尝试解决以下问题，并写下总结"><span class="toc-number">1.23.5.</span> <span class="toc-text">使用工具尝试解决以下问题，并写下总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#编译原理知识"><span class="toc-number">1.23.6.</span> <span class="toc-text">编译原理知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java的反编译工具"><span class="toc-number">1.23.6.1.</span> <span class="toc-text">Java的反编译工具</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作系统知识"><span class="toc-number">1.23.7.</span> <span class="toc-text">操作系统知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库知识"><span class="toc-number">1.23.8.</span> <span class="toc-text">数据库知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事务"><span class="toc-number">1.23.8.1.</span> <span class="toc-text">事务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库锁"><span class="toc-number">1.23.9.</span> <span class="toc-text">数据库锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的NoSQL数据库"><span class="toc-number">1.23.10.</span> <span class="toc-text">常用的NoSQL数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据结构与算法知识"><span class="toc-number">1.24.</span> <span class="toc-text">数据结构与算法知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简单的数据结构"><span class="toc-number">1.24.1.</span> <span class="toc-text">简单的数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#树"><span class="toc-number">1.24.2.</span> <span class="toc-text">树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序算法"><span class="toc-number">1.24.3.</span> <span class="toc-text">排序算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#贪心算法"><span class="toc-number">1.24.3.1.</span> <span class="toc-text">贪心算法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#海量数据处理"><span class="toc-number">1.25.</span> <span class="toc-text">海量数据处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#大数据知识"><span class="toc-number">1.25.1.</span> <span class="toc-text">大数据知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式日志收集"><span class="toc-number">1.25.2.</span> <span class="toc-text">分布式日志收集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络安全知识"><span class="toc-number">1.26.</span> <span class="toc-text">网络安全知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#加密与解密"><span class="toc-number">1.26.1.</span> <span class="toc-text">加密与解密</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#架构篇"><span class="toc-number">1.27.</span> <span class="toc-text">架构篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式"><span class="toc-number">1.27.1.</span> <span class="toc-text">分布式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dubbo"><span class="toc-number">1.27.2.</span> <span class="toc-text">Dubbo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分布式缓存"><span class="toc-number">1.27.3.</span> <span class="toc-text">分布式缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#微服务"><span class="toc-number">1.27.4.</span> <span class="toc-text">微服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高并发"><span class="toc-number">1.27.5.</span> <span class="toc-text">高并发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#监控手段"><span class="toc-number">1.27.5.1.</span> <span class="toc-text">监控手段</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#负载均衡"><span class="toc-number">1.27.6.</span> <span class="toc-text">负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS"><span class="toc-number">1.27.6.1.</span> <span class="toc-text">DNS</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展篇"><span class="toc-number">1.28.</span> <span class="toc-text">扩展篇</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#云计算"><span class="toc-number">1.28.1.</span> <span class="toc-text">云计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#搜索引擎"><span class="toc-number">1.28.2.</span> <span class="toc-text">搜索引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#权限管理"><span class="toc-number">1.28.3.</span> <span class="toc-text">权限管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#区块链"><span class="toc-number">1.28.4.</span> <span class="toc-text">区块链</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#比特币"><span class="toc-number">1.28.5.</span> <span class="toc-text">比特币</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#人工智能"><span class="toc-number">1.28.6.</span> <span class="toc-text">人工智能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#常用框架"><span class="toc-number">1.28.6.1.</span> <span class="toc-text">常用框架</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它语言"><span class="toc-number">1.28.7.</span> <span class="toc-text">其它语言</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#推荐书籍"><span class="toc-number">1.29.</span> <span class="toc-text">推荐书籍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#面试相关"><span class="toc-number">1.29.1.</span> <span class="toc-text">面试相关</span></a></li></ol></li></ol></li></ol>
  
   </div>
 
